@@ -1,0 +1,9 @@
+[package]
+name = "spark-connect-rs-poc"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+spark-connect-rs = { git = "https://github.com/rafafrdz/spark-connect-rust.git", branch = "dev" }
+tokio = { version = "1.44", features = ["rt-multi-thread", "macros"] }
+arrow = { version = "55", features = ["prettyprint"] }
