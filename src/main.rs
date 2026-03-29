@@ -142,7 +142,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .clone()
         .select(vec![transform(
             col("numbers"),
-            col("x") * lit(10),
+            lvar("x") * lit(10),
             "x",
         )
         .alias("multiplied")])
@@ -156,7 +156,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .select(vec![aggregate(
             col("numbers"),
             lit(0),
-            col("acc") + col("x"),
+            lvar("acc") + lvar("x"),
             "acc",
             "x",
         )
