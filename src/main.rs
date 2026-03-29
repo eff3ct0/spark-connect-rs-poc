@@ -76,7 +76,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("\n6. DataFrame transformations (filter, select, sort)...");
     let result = df
         .clone()
-        .filter(col("age").gt(lit(27)))
+        .filter("age > 27")
         .select(vec![
             col("name"),
             col("age"),
@@ -169,8 +169,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("\n11. Checkpoint...");
     let df_check = spark.range(None, 100, 1, Some(4));
     let df_cached = df_check.checkpoint(true).await?;
-    let count = df_cached.count().await?;
-    println!("   Checkpointed DataFrame count: {}", count);
+    let row_count = df_cached.count().await?;
+    println!("   Checkpointed DataFrame count: {}", row_count);
 
     // 12. Observe
     println!("\n12. Observe (metric collection)...");
@@ -184,15 +184,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 13. Catalog operations
     println!("\n13. Catalog operations...");
     let catalog = spark.catalog();
-    let db = catalog.current_database().await?;
+    let db = catalog.clone().current_database().await?;
     println!("   Current database: {}", db);
-    let tables = catalog.list_tables(None).await?;
+    let tables = catalog.list_tables(None, None).await?;
     println!("   Tables: {} found", tables.num_rows());
 
     // 14. Session version and config
     println!("\n14. Runtime config...");
-    let conf = spark.conf();
-    let shuffle = conf.get("spark.sql.shuffle.partitions").await?;
+    let mut conf = spark.conf();
+    let shuffle = conf.get("spark.sql.shuffle.partitions", None).await?;
     println!("   spark.sql.shuffle.partitions = {}", shuffle);
 
     // 15. Stop session
