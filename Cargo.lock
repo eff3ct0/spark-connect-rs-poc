@@ -1523,7 +1523,7 @@ dependencies = [
 [[package]]
 name = "spark-connect-rs"
 version = "0.0.2"
-source = "git+https://github.com/rafafrdz/spark-connect-rust.git?branch=dev#f922fef5e728a63cc2239f18989ab6095e28bece"
+source = "git+https://github.com/rafafrdz/spark-connect-rust.git?branch=dev#28bb4a915c8a9d08f5e94f2403bf2cdfd5ad4ec6"
 dependencies = [
  "arrow",
  "arrow-ipc",

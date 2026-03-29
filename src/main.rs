@@ -76,7 +76,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("\n6. DataFrame transformations (filter, select, sort)...");
     let result = df
         .clone()
-        .filter("age > 27")
+        .filter(col("age").gt(lit(27)))
         .select(vec![
             col("name"),
             col("age"),
@@ -186,13 +186,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let catalog = spark.catalog();
     let db = catalog.clone().current_database().await?;
     println!("   Current database: {}", db);
-    let tables = catalog.list_tables(None, None).await?;
+    let tables = catalog.list_all_tables().await?;
     println!("   Tables: {} found", tables.num_rows());
 
     // 14. Session version and config
     println!("\n14. Runtime config...");
     let mut conf = spark.conf();
-    let shuffle = conf.get("spark.sql.shuffle.partitions", None).await?;
+    let shuffle = conf.get_value("spark.sql.shuffle.partitions").await?;
     println!("   spark.sql.shuffle.partitions = {}", shuffle);
 
     // 15. Stop session
