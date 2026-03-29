@@ -1,6 +1,6 @@
 services:
   spark:
-    image: "apache/spark:3.5.3-scala2.12-java11-r-ubuntu"
+    image: "docker.io/apache/spark:3.5.3-scala2.12-java11-r-ubuntu"
     command: >
       /opt/spark/sbin/start-connect-server.sh
       --packages "org.apache.spark:spark-connect_2.12:3.5.3,io.delta:delta-spark_2.12:3.0.0"
